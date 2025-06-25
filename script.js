@@ -1,3 +1,5 @@
+let latestMarkdown = "";
+
 document.getElementById("useToken").addEventListener("change", (e) => {
   document.getElementById("token").style.display = e.target.checked
     ? "block"
@@ -20,20 +22,22 @@ document.getElementById("analyzeBtn").addEventListener("click", async () => {
   const token = document.getElementById("token").value.trim();
   const mode = document.querySelector('input[name="mode"]:checked').value;
   const geminiKey = document.getElementById("geminiKey").value.trim();
-  const output = document.getElementById("output");
+  const outputDiv = document.getElementById("output");
 
-  output.value = "🔄 Analyzing repositories...";
+  outputDiv.innerHTML = "🔄 Analyzing repositories...";
 
   try {
     const repos = await fetchRepos(username, useToken ? token : null);
     const prompt = generatePrompt(repos);
 
     if (mode === "prompt") {
-      output.value = prompt;
+      latestMarkdown = prompt;
+      outputDiv.textContent = prompt; // Show prompt as plain text
     } else {
-      output.value = "🔄 Contacting Gemini API...";
+      outputDiv.innerHTML = "🔄 Contacting Gemini API...";
+      // Replace with your preferred Gemini call (manual fetch or client)
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -45,16 +49,18 @@ document.getElementById("analyzeBtn").addEventListener("click", async () => {
       const data = await res.json();
       const reply =
         data.candidates?.[0]?.content?.parts?.[0]?.text || "No reply.";
-      output.value = reply;
+
+      latestMarkdown = reply;
+      outputDiv.innerHTML = marked.parse(reply);
     }
   } catch (err) {
-    output.value = "❌ Error: " + err.message;
+    outputDiv.textContent = "❌ Error: " + err.message;
   }
 });
 
 document.getElementById("copyBtn").addEventListener("click", () => {
-  const text = document.getElementById("output").value;
-  navigator.clipboard.writeText(text).then(() => {
-    alert("Prompt copied to clipboard!");
+  if (!latestMarkdown) return alert("Nothing to copy!");
+  navigator.clipboard.writeText(latestMarkdown).then(() => {
+    alert("Markdown copied to clipboard!");
   });
 });

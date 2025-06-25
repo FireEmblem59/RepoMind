@@ -39,8 +39,7 @@ label {
 }
 
 input[type="text"],
-input[type="password"],
-textarea {
+input[type="password"] {
   width: 100%;
   margin-top: 0.3rem;
   padding: 0.75rem;
@@ -51,10 +50,44 @@ textarea {
   background: #fafafa;
 }
 
-textarea {
-  resize: vertical;
-  min-height: 200px;
+.markdown-output {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #fafafa;
+  max-height: 400px;
+  overflow-y: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin-top: 1rem;
+  white-space: pre-wrap;
+}
+
+.markdown-output h1,
+.markdown-output h2,
+.markdown-output h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-output ul,
+.markdown-output ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-output code {
+  background-color: #eee;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: Consolas, monospace;
+}
+
+.markdown-output pre {
+  background-color: #2d2d2d;
+  color: #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
 }
 
 button {

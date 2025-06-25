@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>RepoMind</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -46,13 +46,17 @@
 
       <button id="analyzeBtn">🔍 Analyze My Repos</button>
 
-      <textarea
+      <div
         id="output"
-        readonly
-        placeholder="Your AI prompt or response will appear here..."
-      ></textarea>
-      <button id="copyBtn">📋 Copy</button>
+        class="markdown-output"
+        aria-live="polite"
+        aria-label="AI generated output"
+      ></div>
+      <button id="copyBtn">📋 Copy Markdown</button>
     </div>
+
+    <!-- Marked.js for markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script src="utils/generatePrompt.js"></script>
     <script src="utils/githubFetch.js"></script>
