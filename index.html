@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RepoMind</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <h1>🧠 RepoMind</h1>
+      <p class="subtitle">Smart project ideas based on your GitHub code</p>
+
+      <label for="username">GitHub Username</label>
+      <input id="username" type="text" placeholder="e.g. octocat" />
+
+      <div class="toggle-group">
+        <label>
+          <input type="checkbox" id="useToken" />
+          Include private repositories (via GitHub token)
+        </label>
+        <input
+          id="token"
+          type="password"
+          placeholder="GitHub personal access token"
+          style="display: none"
+        />
+      </div>
+
+      <div class="section">
+        <p><strong>Output mode:</strong></p>
+        <label
+          ><input type="radio" name="mode" value="prompt" checked /> Prompt
+          only</label
+        >
+        <label
+          ><input type="radio" name="mode" value="api" /> Use Gemini API</label
+        >
+        <input
+          id="geminiKey"
+          type="text"
+          placeholder="Gemini API Key"
+          style="display: none"
+        />
+      </div>
+
+      <button id="analyzeBtn">🔍 Analyze My Repos</button>
+
+      <textarea
+        id="output"
+        readonly
+        placeholder="Your AI prompt or response will appear here..."
+      ></textarea>
+      <button id="copyBtn">📋 Copy</button>
+    </div>
+
+    <script src="utils/generatePrompt.js"></script>
+    <script src="utils/githubFetch.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
